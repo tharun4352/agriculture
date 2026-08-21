@@ -1,0 +1,823 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.40),
+            rgba(0, 0, 0, 0.40)
+        ),
+        url("https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1600&q=80");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-attachment: fixed;
+
+    display: flex;
+
+    justify-content: center;
+
+    padding: 30px 15px;
+
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+===================================================== */
+
+.container {
+
+    width: 100%;
+
+    max-width: 950px;
+
+    background:
+        rgba(255, 255, 255, 0.13);
+
+    backdrop-filter:
+        blur(20px);
+
+    -webkit-backdrop-filter:
+        blur(20px);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.25);
+
+    border-radius: 30px;
+
+    padding: 35px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.30);
+
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.title {
+
+    text-align: center;
+
+    color: white;
+
+    font-size: 42px;
+
+    font-weight: 700;
+
+    margin-bottom: 8px;
+
+}
+
+
+.subtitle {
+
+    text-align: center;
+
+    color: rgba(255, 255, 255, 0.90);
+
+    font-size: 16px;
+
+    margin-bottom: 30px;
+
+}
+
+
+
+/* =====================================================
+   SECTION CARD
+===================================================== */
+
+.section-card {
+
+    background:
+        rgba(255, 255, 255, 0.96);
+
+    border-radius: 24px;
+
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.15);
+
+}
+
+
+.section-card h2 {
+
+    color: #1b5e20;
+
+    margin-bottom: 8px;
+
+}
+
+
+.description {
+
+    color: #555;
+
+    line-height: 1.6;
+
+    margin-bottom: 18px;
+
+}
+
+
+
+/* =====================================================
+   UPLOAD
+===================================================== */
+
+.upload-box {
+
+    border:
+        2px dashed #66bb6a;
+
+    border-radius: 18px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    background:
+        #f5fff5;
+
+}
+
+
+input[type="file"] {
+
+    width: 100%;
+
+    padding: 12px;
+
+    cursor: pointer;
+
+    color: #333;
+
+}
+
+
+
+/* =====================================================
+   IMAGE PREVIEW
+===================================================== */
+
+.preview {
+
+    margin-top: 20px;
+
+}
+
+
+.preview img {
+
+    display: none;
+
+    width: 100%;
+
+    max-height: 450px;
+
+    object-fit: contain;
+
+    border-radius: 18px;
+
+}
+
+
+.uploaded-image {
+
+    width: 100%;
+
+    max-height: 500px;
+
+    object-fit: contain;
+
+    border-radius: 18px;
+
+}
+
+
+
+/* =====================================================
+   DETECT BUTTON
+===================================================== */
+
+.detect-btn {
+
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00c853,
+            #43a047
+        );
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+
+.detect-btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(0, 200, 83, 0.35);
+
+}
+
+
+
+/* =====================================================
+   RESULT
+===================================================== */
+
+.result-card {
+
+    background: white;
+
+    border-radius: 24px;
+
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.15);
+
+}
+
+
+.result-card h2 {
+
+    text-align: center;
+
+    color: #1b5e20;
+
+    margin-bottom: 20px;
+
+}
+
+
+.disease-badge {
+
+    display: block;
+
+    width: fit-content;
+
+    margin: 0 auto 25px;
+
+    padding: 9px 20px;
+
+    border-radius: 50px;
+
+    background: #00c853;
+
+    color: white;
+
+    font-weight: 600;
+
+}
+
+
+
+/* =====================================================
+   RESULT GRID
+===================================================== */
+
+.result-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(220px, 1fr)
+        );
+
+    gap: 15px;
+
+}
+
+
+.info-box {
+
+    background:
+        #f4fff4;
+
+    border-left:
+        5px solid #2e7d32;
+
+    border-radius: 15px;
+
+    padding: 18px;
+
+}
+
+
+.info-box .icon {
+
+    font-size: 24px;
+
+}
+
+
+.info-box h4 {
+
+    color: #2e7d32;
+
+    margin: 7px 0;
+
+}
+
+
+.info-box p {
+
+    color: #444;
+
+    line-height: 1.5;
+
+}
+
+
+.full-width {
+
+    grid-column: 1 / -1;
+
+}
+
+
+
+/* =====================================================
+   CAMERA + VOICE PANEL
+===================================================== */
+
+.feature-panel {
+
+    margin-bottom: 25px;
+
+    padding: 25px;
+
+    border-radius: 24px;
+
+    background:
+        rgba(255, 255, 255, 0.16);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.28);
+
+    color: white;
+
+}
+
+
+.feature-panel h2 {
+
+    font-size: 25px;
+
+    margin-bottom: 8px;
+
+}
+
+
+.feature-panel .description {
+
+    color:
+        rgba(255, 255, 255, 0.92);
+
+}
+
+
+
+/* =====================================================
+   CAMERA
+===================================================== */
+
+.camera-container {
+
+    width: 100%;
+
+    background: #111;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    margin-top: 15px;
+
+}
+
+
+#cameraVideo {
+
+    display: block;
+
+    width: 100%;
+
+    min-height: 250px;
+
+    max-height: 500px;
+
+    object-fit: cover;
+
+    background: #111;
+
+}
+
+
+.camera-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+
+    margin-top: 15px;
+
+}
+
+
+.secondary-btn {
+
+    border: none;
+
+    border-radius: 14px;
+
+    padding: 13px;
+
+    background: white;
+
+    color: #1b5e20;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+
+.secondary-btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 7px 15px rgba(0, 0, 0, 0.20);
+
+}
+
+
+.stop-btn {
+
+    color: #b71c1c;
+
+}
+
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status {
+
+    margin-top: 12px;
+
+    padding: 8px 0;
+
+    color:
+        rgba(255, 255, 255, 0.95);
+
+    font-size: 14px;
+
+}
+
+
+
+/* =====================================================
+   LIVE RESULT
+===================================================== */
+
+.live-result {
+
+    margin-top: 15px;
+
+    background: white;
+
+    color: #333;
+
+    border-radius: 18px;
+
+    padding: 18px;
+
+    line-height: 1.6;
+
+}
+
+
+.live-result:empty {
+
+    display: none;
+
+}
+
+
+.live-result p {
+
+    margin: 6px 0;
+
+}
+
+
+.live-badge {
+
+    display: inline-block;
+
+    background: #00c853;
+
+    color: white;
+
+    padding: 8px 15px;
+
+    border-radius: 50px;
+
+    font-weight: 600;
+
+    margin-bottom: 10px;
+
+}
+
+
+
+/* =====================================================
+   VOICE ASSISTANT
+===================================================== */
+
+.voice-row {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 160px;
+
+    gap: 12px;
+
+    margin-top: 15px;
+
+}
+
+
+#voiceLanguage {
+
+    width: 100%;
+
+    padding: 13px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: white;
+
+    color: #333;
+
+    font-size: 15px;
+
+    outline: none;
+
+}
+
+
+.voice-btn {
+
+    border: none;
+
+    border-radius: 14px;
+
+    background:
+        #1b5e20;
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+}
+
+
+.voice-btn:hover {
+
+    background:
+        #0d4012;
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.voice-answer {
+
+    margin-top: 15px;
+
+    background: white;
+
+    color: #333;
+
+    border-radius: 18px;
+
+    padding: 18px;
+
+    line-height: 1.7;
+
+}
+
+
+.voice-answer:empty {
+
+    display: none;
+
+}
+
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+
+    text-align: center;
+
+    color: white;
+
+    font-size: 14px;
+
+    padding: 10px;
+
+}
+
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 768px) {
+
+    body {
+
+        padding: 15px 10px;
+
+    }
+
+
+    .container {
+
+        padding: 22px;
+
+        border-radius: 24px;
+
+    }
+
+
+    .title {
+
+        font-size: 32px;
+
+    }
+
+
+    .camera-actions {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .voice-row {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .full-width {
+
+        grid-column: auto;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 480px) {
+
+    .container {
+
+        padding: 15px;
+
+        border-radius: 20px;
+
+    }
+
+
+    .title {
+
+        font-size: 26px;
+
+    }
+
+
+    .subtitle {
+
+        font-size: 13px;
+
+    }
+
+
+    .section-card,
+    .result-card,
+    .feature-panel {
+
+        padding: 18px;
+
+        border-radius: 18px;
+
+    }
+
+
+    .feature-panel h2 {
+
+        font-size: 21px;
+
+    }
+
+
+    #cameraVideo {
+
+        min-height: 220px;
+
+    }
+
+
+    .result-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+}
