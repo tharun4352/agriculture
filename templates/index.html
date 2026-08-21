@@ -2,407 +2,805 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Smart Agriculture AI</title>
+    <title>AgriMind AI | Smart Agriculture</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+          rel="stylesheet">
 </head>
 
 <body>
 
-<div class="container">
+<div class="app-shell">
 
     <!-- ================================================= -->
-    <!-- HEADER -->
+    <!-- SIDEBAR -->
     <!-- ================================================= -->
 
-    <h1 class="title">
-        🌿 Smart Agriculture AI
-    </h1>
+    <aside class="sidebar">
 
-    <p class="subtitle">
-        AI Powered Plant Disease Detection & Smart Farming Assistant
-    </p>
+        <div class="brand">
+            <div class="brand-icon">🌱</div>
 
+            <div>
+                <h1>AgriMind</h1>
+                <span>AI Agriculture</span>
+            </div>
+        </div>
 
-    <!-- ================================================= -->
-    <!-- IMAGE UPLOAD -->
-    <!-- ================================================= -->
+        <nav class="sidebar-nav">
 
-    <div class="section-card">
+            <a href="#dashboard" class="nav-item active">
+                <span>⌂</span>
+                Dashboard
+            </a>
 
-        <h2>
-            📷 Plant Disease Detection
-        </h2>
+            <a href="#detection" class="nav-item">
+                <span>◉</span>
+                Disease Detection
+            </a>
 
-        <p class="description">
-            Upload a plant leaf image to detect possible diseases.
-        </p>
+            <a href="#camera" class="nav-item">
+                <span>◌</span>
+                Live Camera
+            </a>
 
+            <a href="#assistant" class="nav-item">
+                <span>✦</span>
+                AI Assistant
+            </a>
 
-        <form method="POST"
-              enctype="multipart/form-data">
+        </nav>
 
-            <div class="upload-box">
+        <div class="sidebar-bottom">
 
-                <input
-                    type="file"
-                    name="image"
-                    id="imageInput"
-                    accept="image/*"
-                    onchange="previewImage(event)"
-                    required>
+            <div class="mini-status">
+                <span class="status-dot"></span>
 
+                <div>
+                    <strong>AI System Online</strong>
+                    <small>Ready to assist</small>
+                </div>
             </div>
 
-
-            <div class="preview">
-
-                <img
-                    id="previewImage"
-                    alt="Image Preview">
-
+            <div class="sidebar-footer">
+                Smart farming • Powered by AI
             </div>
-
-
-            <button
-                class="detect-btn"
-                type="submit">
-
-                🚀 Detect Disease
-
-            </button>
-
-        </form>
-
-    </div>
-
-
-
-    <!-- ================================================= -->
-    <!-- UPLOADED IMAGE RESULT -->
-    <!-- ================================================= -->
-
-    {% if img_data %}
-
-    <div class="section-card">
-
-        <h2>
-            🖼️ Uploaded Image
-        </h2>
-
-        <img
-            class="uploaded-image"
-            src="data:image/jpeg;base64,{{ img_data }}"
-            alt="Uploaded plant">
-
-    </div>
-
-    {% endif %}
-
-
-
-    <!-- ================================================= -->
-    <!-- DETECTION RESULT -->
-    <!-- ================================================= -->
-
-    {% if result %}
-
-    <div class="result-card">
-
-        <h2>
-            🌱 Detection Result
-        </h2>
-
-
-        <div class="disease-badge">
-
-            {{ result }}
 
         </div>
 
+    </aside>
 
-        <div class="result-grid">
 
+    <!-- ================================================= -->
+    <!-- MAIN -->
+    <!-- ================================================= -->
 
-            <div class="info-box">
+    <main class="main-content" id="dashboard">
 
-                <span class="icon">
-                    🎯
-                </span>
+        <!-- TOP BAR -->
 
-                <h4>
-                    Confidence
-                </h4>
+        <header class="topbar">
 
-                <p>
-                    {{ confidence }}%
-                </p>
+            <div>
+                <p class="eyebrow">SMART AGRICULTURE PLATFORM</p>
+
+                <h2>
+                    Good day, <span>Farmer.</span> 👋
+                </h2>
+            </div>
+
+            <div class="top-actions">
+
+                <div class="online-pill">
+                    <span></span>
+                    AI Online
+                </div>
+
+                <button class="icon-button"
+                        onclick="scrollToAssistant()"
+                        title="Open AI Assistant">
+                    ✦
+                </button>
 
             </div>
 
+        </header>
 
 
-            <div class="info-box">
+        <!-- ================================================= -->
+        <!-- HERO -->
+        <!-- ================================================= -->
 
-                <span class="icon">
-                    💧
-                </span>
+        <section class="hero-card">
 
-                <h4>
-                    Soil Moisture
-                </h4>
+            <div class="hero-content">
+
+                <div class="hero-label">
+                    <span>✦</span>
+                    INTELLIGENT FARMING
+                </div>
+
+                <h1>
+                    Grow smarter.<br>
+                    <span>Farm better.</span>
+                </h1>
 
                 <p>
-                    {{ soil_moisture }}%
+                    Detect plant diseases, monitor your crops through
+                    live camera analysis, and talk naturally with your
+                    personal agriculture AI.
                 </p>
+
+                <div class="hero-buttons">
+
+                    <a href="#detection"
+                       class="primary-button">
+                        Analyze a Plant
+                        <span>→</span>
+                    </a>
+
+                    <button onclick="scrollToAssistant()"
+                            class="glass-button">
+                        Ask AI
+                        <span>✦</span>
+                    </button>
+
+                </div>
 
             </div>
 
+            <div class="hero-visual">
 
+                <div class="orb orb-one"></div>
+                <div class="orb orb-two"></div>
 
-            <div class="info-box">
-
-                <span class="icon">
-                    🧪
-                </span>
-
-                <h4>
-                    Pesticide
-                </h4>
-
-                <p>
-                    {{ pesticide or "Not available" }}
-                </p>
-
-            </div>
-
-
-
-            <div class="info-box">
-
-                <span class="icon">
+                <div class="plant-illustration">
                     🌿
-                </span>
+                </div>
 
-                <h4>
-                    Home Remedy
-                </h4>
+                <div class="floating-card floating-card-one">
+                    <span>🧠</span>
+                    <div>
+                        <strong>AI Vision</strong>
+                        <small>Plant analysis</small>
+                    </div>
+                </div>
 
-                <p>
-                    {{ remedy_name or "Not available" }}
-                </p>
+                <div class="floating-card floating-card-two">
+                    <span>✓</span>
+                    <div>
+                        <strong>Smart Care</strong>
+                        <small>Personalized advice</small>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- QUICK STATS -->
+        <!-- ================================================= -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">◉</div>
+
+                <div>
+                    <span>AI Vision</span>
+                    <strong>Active</strong>
+                </div>
+
+                <div class="stat-arrow">↗</div>
 
             </div>
 
 
+            <div class="stat-card">
 
-            <div class="info-box full-width">
+                <div class="stat-icon blue">◌</div>
 
-                <span class="icon">
-                    📖
-                </span>
+                <div>
+                    <span>Live Camera</span>
+                    <strong>Ready</strong>
+                </div>
 
-                <h4>
-                    Remedy Process
-                </h4>
-
-                <p>
-                    {{ remedy_process or "Not available" }}
-                </p>
+                <div class="stat-arrow">↗</div>
 
             </div>
 
-        </div>
 
-    </div>
+            <div class="stat-card">
 
-    {% endif %}
+                <div class="stat-icon purple">✦</div>
 
+                <div>
+                    <span>AI Assistant</span>
+                    <strong>Online</strong>
+                </div>
 
+                <div class="stat-arrow">↗</div>
 
-    <!-- ================================================= -->
-    <!-- LIVE CAMERA DETECTION -->
-    <!-- ================================================= -->
+            </div>
 
-    <div class="feature-panel">
+        </section>
 
-        <h2>
-            📹 Live Camera Detection
-        </h2>
 
-        <p class="description">
-            Start your camera and point it at a plant leaf.
-            The system will automatically analyze the camera image.
-        </p>
+        <!-- ================================================= -->
+        <!-- DETECTION SECTION -->
+        <!-- ================================================= -->
 
+        <section class="content-grid" id="detection">
 
-        <div class="camera-container">
+            <div class="panel upload-panel">
 
-            <video
-                id="cameraVideo"
-                autoplay
-                playsinline
-                muted>
-            </video>
+                <div class="panel-heading">
 
-        </div>
+                    <div>
+                        <span class="section-tag">01 · AI VISION</span>
 
+                        <h3>
+                            Plant Disease Detection
+                        </h3>
 
-        <canvas
-            id="cameraCanvas"
-            hidden>
-        </canvas>
+                        <p>
+                            Upload a leaf image and let AgriMind
+                            analyze your plant.
+                        </p>
+                    </div>
 
+                    <div class="heading-icon">
+                        ◉
+                    </div>
 
-        <div class="camera-actions">
+                </div>
 
-            <button
-                type="button"
-                class="secondary-btn"
-                onclick="startCamera()">
 
-                ▶ Start Camera
+                <form method="POST"
+                      enctype="multipart/form-data"
+                      id="uploadForm">
 
-            </button>
+                    <label class="drop-zone"
+                           for="imageInput">
 
+                        <input type="file"
+                               name="image"
+                               id="imageInput"
+                               accept="image/*"
+                               onchange="previewImage(event)"
+                               required>
 
-            <button
-                type="button"
-                class="secondary-btn stop-btn"
-                onclick="stopCamera()">
+                        <div class="upload-icon">
+                            ↑
+                        </div>
 
-                ⏹ Stop Camera
+                        <strong>
+                            Drop your plant image here
+                        </strong>
 
-            </button>
+                        <span>
+                            or click to browse
+                        </span>
 
-        </div>
+                        <small>
+                            JPG, PNG or WEBP
+                        </small>
 
+                    </label>
 
-        <div
-            id="cameraStatus"
-            class="status">
 
-            Camera is off.
+                    <div class="preview-wrapper"
+                         id="previewWrapper">
 
-        </div>
+                        <img id="previewImage"
+                             alt="Plant preview">
 
+                        <button type="button"
+                                onclick="removePreview(event)"
+                                class="remove-preview">
+                            ×
+                        </button>
 
-        <!-- LIVE RESULT -->
+                    </div>
 
-        <div
-            id="liveResult"
-            class="live-result">
 
-        </div>
+                    <button type="submit"
+                            class="analyze-button">
 
-    </div>
+                        <span>Analyze Plant</span>
+                        <span>→</span>
 
+                    </button>
 
+                </form>
 
-    <!-- ================================================= -->
-    <!-- VOICE ASSISTANT -->
-    <!-- ================================================= -->
+            </div>
 
-    <div class="feature-panel">
 
-        <h2>
-            🎙️ Voice Agriculture Assistant
-        </h2>
+            <!-- DETECTION RESULT -->
 
-        <p class="description">
-            Ask about the detected disease, pesticide,
-            home remedy or soil moisture.
-        </p>
+            <div class="panel result-panel">
 
+                <div class="panel-heading">
 
-        <div class="voice-row">
+                    <div>
+                        <span class="section-tag">02 · ANALYSIS</span>
 
+                        <h3>
+                            Latest Result
+                        </h3>
+                    </div>
 
-            <select
-                id="voiceLanguage"
-                aria-label="Voice assistant language">
+                    <div class="live-indicator">
+                        <span></span>
+                        Live
+                    </div>
 
-                <option value="en-IN">
-                    🇬🇧 English
-                </option>
+                </div>
 
-                <option value="hi-IN">
-                    🇮🇳 हिन्दी (Hindi)
-                </option>
 
-                <option value="te-IN">
-                    🇮🇳 తెలుగు (Telugu)
-                </option>
+                {% if result %}
 
-                <option value="ta-IN">
-                    🇮🇳 தமிழ் (Tamil)
-                </option>
+                <div class="result-content">
 
-                <option value="kn-IN">
-                    🇮🇳 ಕನ್ನಡ (Kannada)
-                </option>
+                    <div class="result-main">
 
-            </select>
+                        <div class="result-check">
+                            ✓
+                        </div>
 
+                        <div>
+                            <span class="result-label">
+                                DETECTED CONDITION
+                            </span>
 
-            <button
-                type="button"
-                class="voice-btn"
-                onclick="startVoiceAssistant()">
+                            <h4>
+                                {{ result }}
+                            </h4>
+                        </div>
 
-                🎤 Speak
+                    </div>
 
-            </button>
 
-        </div>
+                    <div class="metrics">
 
+                        <div class="metric">
 
-        <div
-            id="voiceStatus"
-            class="status">
+                            <span>Confidence</span>
 
-            Choose a language and tap Speak.
+                            <strong>
+                                {{ confidence }}%
+                            </strong>
 
-        </div>
+                            <div class="progress">
+                                <i style="width: {{ confidence }}%"></i>
+                            </div>
 
+                        </div>
 
-        <div
-            id="voiceAnswer"
-            class="voice-answer">
 
-        </div>
+                        <div class="metric">
 
-    </div>
+                            <span>Soil Moisture</span>
 
+                            <strong>
+                                {{ soil_moisture }}%
+                            </strong>
 
+                            <div class="progress blue-progress">
+                                <i style="width: {{ soil_moisture }}%"></i>
+                            </div>
 
-    <!-- ================================================= -->
-    <!-- FOOTER -->
-    <!-- ================================================= -->
+                        </div>
 
-    <div class="footer">
+                    </div>
 
-        🌱 Smart Agriculture AI
 
-        <br>
+                    <div class="recommendation">
 
-        AI for Better Farming
+                        <div class="recommendation-icon">
+                            🧪
+                        </div>
 
-    </div>
+                        <div>
+                            <span>RECOMMENDED TREATMENT</span>
+
+                            <p>
+                                {{ pesticide or "No recommendation available." }}
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="remedy-box">
+
+                        <div class="remedy-title">
+                            🌿 Home Care
+                        </div>
+
+                        <strong>
+                            {{ remedy_name or "General plant care" }}
+                        </strong>
+
+                        <p>
+                            {{ remedy_process or "Ask the AI assistant for more information." }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-result">
+
+                    <div class="empty-icon">
+                        ✧
+                    </div>
+
+                    <h4>
+                        No analysis yet
+                    </h4>
+
+                    <p>
+                        Upload a plant image to see your
+                        AI-powered analysis here.
+                    </p>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- CAMERA -->
+        <!-- ================================================= -->
+
+        <section class="camera-section" id="camera">
+
+            <div class="camera-heading">
+
+                <div>
+
+                    <span class="section-tag">
+                        03 · COMPUTER VISION
+                    </span>
+
+                    <h3>
+                        Live Plant Scanner
+                    </h3>
+
+                    <p>
+                        Point your camera at a plant and let AI
+                        continuously analyze what it sees.
+                    </p>
+
+                </div>
+
+                <div class="camera-live">
+                    <span></span>
+                    LIVE SCANNER
+                </div>
+
+            </div>
+
+
+            <div class="camera-layout">
+
+                <div class="camera-view">
+
+                    <video id="cameraVideo"
+                           autoplay
+                           playsinline
+                           muted>
+                    </video>
+
+                    <div class="camera-overlay">
+
+                        <div class="scan-corner top-left"></div>
+                        <div class="scan-corner top-right"></div>
+                        <div class="scan-corner bottom-left"></div>
+                        <div class="scan-corner bottom-right"></div>
+
+                        <div class="scan-line"></div>
+
+                        <div class="camera-message">
+                            Point camera at a leaf
+                        </div>
+
+                    </div>
+
+                    <div class="camera-top-label">
+                        <span></span>
+                        AI VISION
+                    </div>
+
+                </div>
+
+
+                <div class="camera-side">
+
+                    <div class="camera-status-card">
+
+                        <div class="camera-status-header">
+
+                            <span class="status-dot"></span>
+
+                            <strong>
+                                Scanner ready
+                            </strong>
+
+                        </div>
+
+                        <p id="cameraStatus">
+                            Start the camera to begin
+                            real-time plant analysis.
+                        </p>
+
+                    </div>
+
+
+                    <button onclick="startCamera()"
+                            class="camera-button start">
+
+                        <span>▶</span>
+                        Start Camera
+
+                    </button>
+
+
+                    <button onclick="stopCamera()"
+                            class="camera-button stop">
+
+                        <span>■</span>
+                        Stop Camera
+
+                    </button>
+
+
+                    <div id="liveResult"
+                         class="live-result">
+
+                        <div class="live-empty">
+                            <span>✦</span>
+                            Detection results will appear here.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <canvas id="cameraCanvas" hidden></canvas>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- AI ASSISTANT -->
+        <!-- ================================================= -->
+
+        <section class="assistant-section" id="assistant">
+
+            <div class="assistant-top">
+
+                <div>
+
+                    <span class="section-tag">
+                        04 · CONVERSATIONAL AI
+                    </span>
+
+                    <h3>
+                        Your Agriculture Copilot
+                    </h3>
+
+                    <p>
+                        Ask questions naturally. Get intelligent,
+                        personalized farming guidance.
+                    </p>
+
+                </div>
+
+
+                <button onclick="clearChat()"
+                        class="clear-chat-button">
+
+                    ↻ New conversation
+
+                </button>
+
+            </div>
+
+
+            <div class="chat-window">
+
+                <div class="chat-header">
+
+                    <div class="ai-avatar">
+                        ✦
+                    </div>
+
+                    <div>
+                        <strong>
+                            AgriMind AI
+                        </strong>
+
+                        <span>
+                            <i></i>
+                            Online · Agriculture expert
+                        </span>
+                    </div>
+
+
+                    <div class="chat-language">
+
+                        <span>Language</span>
+
+                        <select id="voiceLanguage">
+
+                            <option value="en-IN">
+                                English
+                            </option>
+
+                            <option value="hi-IN">
+                                हिन्दी · Hindi
+                            </option>
+
+                            <option value="te-IN">
+                                తెలుగు · Telugu
+                            </option>
+
+                            <option value="ta-IN">
+                                தமிழ் · Tamil
+                            </option>
+
+                            <option value="kn-IN">
+                                ಕನ್ನಡ · Kannada
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div id="chatBox"
+                     class="chat-box">
+
+                    <div class="message assistant-message">
+
+                        <div class="message-avatar">
+                            ✦
+                        </div>
+
+                        <div class="message-bubble">
+
+                            <strong>
+                                Hello! I'm AgriMind. 🌱
+                            </strong>
+
+                            <p>
+                                I'm your AI agriculture assistant.
+                                Tell me about your plant, upload a
+                                leaf image, or ask me anything about
+                                farming.
+                            </p>
+
+                            <div class="suggestions">
+
+                                <button onclick="useSuggestion(this)">
+                                    Why are my leaves turning yellow?
+                                </button>
+
+                                <button onclick="useSuggestion(this)">
+                                    How can I treat plant disease?
+                                </button>
+
+                                <button onclick="useSuggestion(this)">
+                                    How often should I water my plant?
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div id="voiceStatus"
+                     class="voice-status">
+
+                    <span class="voice-dot"></span>
+                    Ready to help
+                </div>
+
+
+                <div class="chat-input-container">
+
+                    <button id="micButton"
+                            class="mic-button"
+                            onclick="toggleVoice()"
+                            title="Voice input">
+
+                        🎙
+
+                    </button>
+
+
+                    <textarea id="messageInput"
+                              rows="1"
+                              placeholder="Ask AgriMind anything..."
+                              onkeydown="handleEnter(event)"></textarea>
+
+
+                    <button class="send-button"
+                            onclick="sendMessage()">
+
+                        ↑
+
+                    </button>
+
+                </div>
+
+
+                <div class="chat-disclaimer">
+
+                    AgriMind AI can make mistakes.
+                    Verify important agricultural decisions with
+                    local agricultural experts.
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================================= -->
+        <!-- FOOTER -->
+        <!-- ================================================= -->
+
+        <footer>
+
+            <div class="footer-brand">
+                <span>🌱</span>
+                AgriMind AI
+            </div>
+
+            <span>
+                Smart technology for smarter farming.
+            </span>
+
+            <span>
+                © 2026
+            </span>
+
+        </footer>
+
+    </main>
 
 </div>
-
 
 
 <script>
@@ -413,74 +811,70 @@
 
 function previewImage(event) {
 
-    const file =
-        event.target.files[0];
+    const file = event.target.files[0];
 
-    if (!file) {
-        return;
-    }
+    if (!file) return;
 
-    const reader =
-        new FileReader();
+    const reader = new FileReader();
 
-    reader.onload =
-        function(event) {
+    reader.onload = function(e) {
 
-            const image =
-                document.getElementById(
-                    "previewImage"
-                );
+        const preview =
+            document.getElementById("previewImage");
 
-            image.src =
-                event.target.result;
+        const wrapper =
+            document.getElementById("previewWrapper");
 
-            image.style.display =
-                "block";
-        };
+        preview.src = e.target.result;
+
+        wrapper.classList.add("show");
+
+    };
 
     reader.readAsDataURL(file);
 }
 
 
+function removePreview(event) {
+
+    event.preventDefault();
+
+    const input =
+        document.getElementById("imageInput");
+
+    const wrapper =
+        document.getElementById("previewWrapper");
+
+    input.value = "";
+
+    wrapper.classList.remove("show");
+
+}
+
 
 /* =====================================================
-   CAMERA VARIABLES
+   CAMERA
 ===================================================== */
 
 let cameraStream = null;
-
 let cameraTimer = null;
-
 let cameraBusy = false;
 
-let lastDetection = null;
-
-
-
-/* =====================================================
-   START CAMERA
-===================================================== */
 
 async function startCamera() {
 
     const video =
-        document.getElementById(
-            "cameraVideo"
-        );
+        document.getElementById("cameraVideo");
 
     const status =
-        document.getElementById(
-            "cameraStatus"
-        );
+        document.getElementById("cameraStatus");
 
 
-    if (
-        !navigator.mediaDevices ||
-        !navigator.mediaDevices.getUserMedia
-    ) {
+    if (!navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia) {
 
         status.textContent =
-            "❌ Camera is not supported by this browser.";
+            "Camera is not supported by this browser.";
 
         return;
     }
@@ -492,7 +886,6 @@ async function startCamera() {
             await navigator.mediaDevices.getUserMedia({
 
                 video: {
-
                     facingMode: {
                         ideal: "environment"
                     },
@@ -504,7 +897,6 @@ async function startCamera() {
                     height: {
                         ideal: 720
                     }
-
                 },
 
                 audio: false
@@ -512,23 +904,29 @@ async function startCamera() {
             });
 
 
-        video.srcObject =
-            cameraStream;
+        video.srcObject = cameraStream;
 
 
         status.textContent =
-            "🟢 Camera is running. Detecting automatically...";
+            "Camera active. AI is analyzing the plant...";
 
 
-        clearInterval(
-            cameraTimer
-        );
+        document
+            .querySelector(".camera-view")
+            .classList.add("active");
+
+
+        if (cameraTimer) {
+
+            clearInterval(cameraTimer);
+
+        }
 
 
         cameraTimer =
             setInterval(
                 captureAndDetect,
-                3000
+                4000
             );
 
 
@@ -541,27 +939,21 @@ async function startCamera() {
         console.error(error);
 
         status.textContent =
-            "❌ Camera permission was denied or camera is unavailable.";
+            "Camera access denied. Please allow camera permission.";
 
     }
 
 }
 
 
-
-/* =====================================================
-   STOP CAMERA
-===================================================== */
-
 function stopCamera() {
 
     if (cameraTimer) {
 
-        clearInterval(
-            cameraTimer
-        );
+        clearInterval(cameraTimer);
 
         cameraTimer = null;
+
     }
 
 
@@ -574,77 +966,54 @@ function stopCamera() {
             );
 
         cameraStream = null;
+
     }
 
 
     document
-        .getElementById(
-            "cameraVideo"
-        )
+        .getElementById("cameraVideo")
         .srcObject = null;
 
 
     document
-        .getElementById(
-            "cameraStatus"
-        )
+        .querySelector(".camera-view")
+        .classList.remove("active");
+
+
+    document
+        .getElementById("cameraStatus")
         .textContent =
-        "Camera is off.";
+        "Camera stopped. Start again when you're ready.";
 
 }
 
 
-
-/* =====================================================
-   CAPTURE CAMERA FRAME
-===================================================== */
-
 async function captureAndDetect() {
 
-    if (
-        !cameraStream ||
-        cameraBusy
-    ) {
-
+    if (!cameraStream || cameraBusy)
         return;
-    }
 
 
     const video =
-        document.getElementById(
-            "cameraVideo"
-        );
-
+        document.getElementById("cameraVideo");
 
     const canvas =
-        document.getElementById(
-            "cameraCanvas"
-        );
+        document.getElementById("cameraCanvas");
 
 
-    if (
-        video.readyState < 2 ||
-        video.videoWidth === 0
-    ) {
-
+    if (!video.videoWidth)
         return;
-    }
 
 
     cameraBusy = true;
 
 
-    canvas.width =
-        video.videoWidth;
-
-    canvas.height =
-        video.videoHeight;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
 
 
     const context =
-        canvas.getContext(
-            "2d"
-        );
+        canvas.getContext("2d");
 
 
     context.drawImage(
@@ -664,7 +1033,6 @@ async function captureAndDetect() {
 
                 const formData =
                     new FormData();
-
 
                 formData.append(
                     "image",
@@ -687,37 +1055,17 @@ async function captureAndDetect() {
                     await response.json();
 
 
-                if (data.error) {
-
-                    throw new Error(
-                        data.error
-                    );
-                }
+                if (data.error)
+                    throw new Error(data.error);
 
 
-                lastDetection =
-                    data;
-
-
-                showLiveResult(
-                    data
-                );
+                showLiveResult(data);
 
             }
 
             catch (error) {
 
-                console.error(
-                    error
-                );
-
-                document
-                    .getElementById(
-                        "cameraStatus"
-                    )
-                    .textContent =
-                    "❌ Detection error: " +
-                    error.message;
+                console.error(error);
 
             }
 
@@ -731,214 +1079,412 @@ async function captureAndDetect() {
 
         "image/jpeg",
 
-        0.82
+        0.80
 
     );
 
 }
 
-
-
-/* =====================================================
-   SHOW CAMERA RESULT
-===================================================== */
 
 function showLiveResult(data) {
 
-    const box =
-        document.getElementById(
-            "liveResult"
-        );
+    const result =
+        document.getElementById("liveResult");
 
 
-    box.innerHTML = `
+    result.innerHTML = `
 
-        <div class="live-badge">
+        <div class="live-result-title">
 
-            ${escapeHtml(
-                String(data.result)
-            )}
+            <span class="result-live-dot"></span>
+
+            AI Detection
 
         </div>
 
+        <h4>
+            ${escapeHtml(data.result)}
+        </h4>
 
-        <p>
-            <strong>🎯 Confidence:</strong>
-            ${escapeHtml(
-                String(data.confidence)
-            )}%
-        </p>
+        <div class="live-metrics">
 
+            <div>
+                <span>Confidence</span>
+                <strong>${escapeHtml(data.confidence)}%</strong>
+            </div>
 
-        <p>
-            <strong>💧 Soil Moisture:</strong>
-            ${escapeHtml(
-                String(data.soil_moisture)
-            )}%
-        </p>
+            <div>
+                <span>Moisture</span>
+                <strong>${escapeHtml(data.soil_moisture)}%</strong>
+            </div>
 
+        </div>
 
-        <p>
-            <strong>🧪 Pesticide:</strong>
-            ${escapeHtml(
-                data.pesticide || "Not available"
-            )}
-        </p>
+        <div class="live-treatment">
 
+            <span>Recommended</span>
 
-        <p>
-            <strong>🌿 Home Remedy:</strong>
-            ${escapeHtml(
-                data.remedy_name || "Not available"
-            )}
-        </p>
+            <p>
+                ${escapeHtml(
+                    data.pesticide ||
+                    "No recommendation available."
+                )}
+            </p>
 
-
-        <p>
-            <strong>📖 Process:</strong>
-            ${escapeHtml(
-                data.remedy_process || "Not available"
-            )}
-        </p>
+        </div>
 
     `;
+
 }
 
 
-
 /* =====================================================
-   ESCAPE HTML
+   CHAT
 ===================================================== */
 
-function escapeHtml(value) {
+async function sendMessage() {
 
-    return value.replace(
-        /[&<>"']/g,
-        function(character) {
+    const input =
+        document.getElementById("messageInput");
 
-            return {
+    const message =
+        input.value.trim();
 
-                "&": "&amp;",
 
-                "<": "&lt;",
+    if (!message)
+        return;
 
-                ">": "&gt;",
 
-                '"': "&quot;",
+    addMessage(
+        message,
+        "user"
+    );
 
-                "'": "&#039;"
 
-            }[character];
+    input.value = "";
+
+    input.style.height = "auto";
+
+
+    showTyping();
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/chat",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        message: message
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        removeTyping();
+
+
+        if (data.error) {
+
+            addMessage(
+                "I'm sorry, I couldn't process that request. " +
+                data.error,
+                "assistant"
+            );
+
+            return;
 
         }
-    );
+
+
+        addMessage(
+            data.answer,
+            "assistant"
+        );
+
+
+        speakAnswer(
+            data.answer
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        removeTyping();
+
+        addMessage(
+            "I couldn't connect to the AI service. " +
+            "Please check your connection and try again.",
+            "assistant"
+        );
+
+    }
+
 }
 
 
+function addMessage(text, sender) {
+
+    const chatBox =
+        document.getElementById("chatBox");
+
+
+    const message =
+        document.createElement("div");
+
+
+    message.className =
+        sender === "user"
+            ? "message user-message"
+            : "message assistant-message";
+
+
+    const avatar =
+        sender === "user"
+            ? "You"
+            : "✦";
+
+
+    message.innerHTML = `
+
+        <div class="message-avatar">
+            ${avatar}
+        </div>
+
+        <div class="message-bubble">
+            ${formatMessage(text)}
+        </div>
+
+    `;
+
+
+    chatBox.appendChild(message);
+
+    scrollChat();
+
+}
+
+
+function formatMessage(text) {
+
+    return escapeHtml(String(text))
+        .replace(/\n/g, "<br>");
+
+}
+
+
+function showTyping() {
+
+    const chatBox =
+        document.getElementById("chatBox");
+
+
+    const typing =
+        document.createElement("div");
+
+
+    typing.id =
+        "typingIndicator";
+
+
+    typing.className =
+        "message assistant-message";
+
+
+    typing.innerHTML = `
+
+        <div class="message-avatar">
+            ✦
+        </div>
+
+        <div class="message-bubble typing">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+    `;
+
+
+    chatBox.appendChild(typing);
+
+    scrollChat();
+
+}
+
+
+function removeTyping() {
+
+    const typing =
+        document.getElementById(
+            "typingIndicator"
+        );
+
+
+    if (typing)
+        typing.remove();
+
+}
+
+
+function scrollChat() {
+
+    const chatBox =
+        document.getElementById("chatBox");
+
+    chatBox.scrollTop =
+        chatBox.scrollHeight;
+
+}
+
+
+function useSuggestion(button) {
+
+    const input =
+        document.getElementById("messageInput");
+
+    input.value =
+        button.textContent.trim();
+
+    input.focus();
+
+    sendMessage();
+
+}
+
 
 /* =====================================================
-   VOICE RESPONSE TEXT
+   CLEAR CHAT
 ===================================================== */
 
-function getVoiceText() {
+async function clearChat() {
 
-    if (!lastDetection) {
+    try {
 
-        return {
+        await fetch(
+            "/clear-chat",
+            {
+                method: "POST"
+            }
+        );
 
-            en:
-                "Please start the live camera or upload a plant leaf image first.",
+    }
 
-            hi:
-                "कृपया पहले लाइव कैमरा शुरू करें या पौधे की पत्ती की तस्वीर अपलोड करें।",
+    catch (error) {
 
-            te:
-                "దయచేసి ముందుగా లైవ్ కెమెరాను ప్రారంభించండి లేదా మొక్క ఆకు చిత్రాన్ని అప్‌లోడ్ చేయండి.",
-
-            ta:
-                "முதலில் நேரடி கேமராவை தொடங்கவும் அல்லது தாவர இலைப் படத்தை பதிவேற்றவும்.",
-
-            kn:
-                "ದಯವಿಟ್ಟು ಮೊದಲು ಲೈವ್ ಕ್ಯಾಮೆರಾವನ್ನು ಪ್ರಾರಂಭಿಸಿ ಅಥವಾ ಸಸ್ಯದ ಎಲೆಯ ಚಿತ್ರವನ್ನು ಅಪ್‌ಲೋಡ್ ಮಾಡಿ."
-
-        };
+        console.error(error);
 
     }
 
 
-    const data =
-        lastDetection;
+    document.getElementById(
+        "chatBox"
+    ).innerHTML = `
 
+        <div class="message assistant-message">
 
-    return {
+            <div class="message-avatar">
+                ✦
+            </div>
 
-        en:
+            <div class="message-bubble">
 
-            `The detected disease is ${data.result}. ` +
-            `Confidence is ${data.confidence} percent. ` +
-            `Soil moisture is ${data.soil_moisture} percent. ` +
-            `Pesticide recommendation is ${data.pesticide}. ` +
-            `Home remedy is ${data.remedy_name}. ` +
-            `${data.remedy_process}`,
+                <strong>
+                    Fresh conversation started. 🌱
+                </strong>
 
+                <p>
+                    What would you like to know about
+                    your crops today?
+                </p>
 
+            </div>
 
-        hi:
+        </div>
 
-            `पता चली बीमारी ${data.result} है। ` +
-            `भरोसे का स्तर ${data.confidence} प्रतिशत है। ` +
-            `मिट्टी की नमी ${data.soil_moisture} प्रतिशत है। ` +
-            `सुझाया गया उपचार ${data.pesticide} है। ` +
-            `घरेलू उपाय ${data.remedy_name} है। ` +
-            `${data.remedy_process}`,
+    `;
 
-
-
-        te:
-
-            `గుర్తించిన వ్యాధి ${data.result}. ` +
-            `నమ్మక స్థాయి ${data.confidence} శాతం. ` +
-            `నేల తేమ ${data.soil_moisture} శాతం. ` +
-            `సూచించిన మందు ${data.pesticide}. ` +
-            `ఇంటి పరిష్కారం ${data.remedy_name}. ` +
-            `${data.remedy_process}`,
-
-
-
-        ta:
-
-            `கண்டறியப்பட்ட நோய் ${data.result}. ` +
-            `நம்பகத்தன்மை ${data.confidence} சதவீதம். ` +
-            `மண் ஈரப்பதம் ${data.soil_moisture} சதவீதம். ` +
-            `பரிந்துரைக்கப்பட்ட மருந்து ${data.pesticide}. ` +
-            `வீட்டு தீர்வு ${data.remedy_name}. ` +
-            `${data.remedy_process}`,
-
-
-
-        kn:
-
-            `ಪತ್ತೆಯಾದ ರೋಗ ${data.result}. ` +
-            `ವಿಶ್ವಾಸ ಮಟ್ಟ ${data.confidence} ಶೇಕಡಾ. ` +
-            `ಮಣ್ಣಿನ ತೇವಾಂಶ ${data.soil_moisture} ಶೇಕಡಾ. ` +
-            `ಶಿಫಾರಸು ಮಾಡಿದ ಔಷಧಿ ${data.pesticide}. ` +
-            `ಮನೆಮದ್ದು ${data.remedy_name}. ` +
-            `${data.remedy_process}`
-
-    };
 }
 
 
-
 /* =====================================================
-   VOICE ASSISTANT
+   ENTER TO SEND
 ===================================================== */
 
-function startVoiceAssistant() {
+function handleEnter(event) {
+
+    if (
+        event.key === "Enter" &&
+        !event.shiftKey
+    ) {
+
+        event.preventDefault();
+
+        sendMessage();
+
+    }
+
+}
+
+
+/* =====================================================
+   VOICE INPUT
+===================================================== */
+
+let recognition = null;
+let listening = false;
+
+
+function toggleVoice() {
+
+    if (listening)
+        stopVoice();
+
+    else
+        startVoice();
+
+}
+
+
+function startVoice() {
 
     const SpeechRecognition =
         window.SpeechRecognition ||
         window.webkitSpeechRecognition;
+
+
+    const status =
+        document.getElementById("voiceStatus");
+
+
+    if (!SpeechRecognition) {
+
+        status.innerHTML =
+            '<span class="voice-dot"></span>' +
+            'Voice recognition requires Google Chrome.';
+
+        return;
+
+    }
 
 
     const language =
@@ -947,137 +1493,63 @@ function startVoiceAssistant() {
         ).value;
 
 
-    const status =
-        document.getElementById(
-            "voiceStatus"
-        );
-
-
-    const answer =
-        document.getElementById(
-            "voiceAnswer"
-        );
-
-
-    if (!SpeechRecognition) {
-
-        status.textContent =
-            "❌ Voice recognition is not supported in this browser. Try Google Chrome.";
-
-        return;
-    }
-
-
-    const recognition =
+    recognition =
         new SpeechRecognition();
 
 
     recognition.lang =
         language;
 
+    recognition.continuous =
+        false;
 
     recognition.interimResults =
         false;
-
 
     recognition.maxAlternatives =
         1;
 
 
-    status.textContent =
-        "🎙️ Listening...";
+    recognition.onstart =
+        function() {
+
+            listening = true;
 
 
-    recognition.start();
+            document
+                .getElementById("micButton")
+                .classList.add("recording");
+
+
+            document
+                .getElementById("micButton")
+                .textContent =
+                "■";
+
+
+            status.innerHTML =
+                '<span class="recording-dot"></span>' +
+                'Listening... Speak now';
+
+        };
 
 
     recognition.onresult =
         function(event) {
 
-            const spokenText =
-                event
-                    .results[0][0]
-                    .transcript;
+            const transcript =
+                event.results[0][0].transcript;
 
 
-            const voiceText =
-                getVoiceText();
+            document
+                .getElementById("messageInput")
+                .value =
+                transcript;
 
 
-            let languageKey =
-                "en";
+            stopVoice();
 
-
-            if (
-                language.startsWith("hi")
-            ) {
-
-                languageKey = "hi";
-
-            }
-
-            else if (
-                language.startsWith("te")
-            ) {
-
-                languageKey = "te";
-
-            }
-
-            else if (
-                language.startsWith("ta")
-            ) {
-
-                languageKey = "ta";
-
-            }
-
-            else if (
-                language.startsWith("kn")
-            ) {
-
-                languageKey = "kn";
-
-            }
-
-
-            const response =
-                voiceText[
-                    languageKey
-                ];
-
-
-            answer.innerHTML = `
-
-                <strong>
-                    You:
-                </strong>
-
-                ${escapeHtml(
-                    spokenText
-                )}
-
-                <br><br>
-
-                <strong>
-                    🤖 Assistant:
-                </strong>
-
-                ${escapeHtml(
-                    response
-                )}
-
-            `;
-
-
-            speak(
-                response,
-                language
-            );
-
-
-            status.textContent =
-                "✅ Ready. Tap Speak to ask again.";
+            sendMessage();
 
         };
 
@@ -1085,14 +1557,14 @@ function startVoiceAssistant() {
     recognition.onerror =
         function(event) {
 
-            console.error(
-                event.error
-            );
+            console.error(event.error);
 
-
-            status.textContent =
-                "❌ Voice error: " +
+            status.innerHTML =
+                '<span class="voice-dot"></span>' +
+                'Voice error: ' +
                 event.error;
+
+            stopVoice();
 
         };
 
@@ -1100,62 +1572,181 @@ function startVoiceAssistant() {
     recognition.onend =
         function() {
 
-            if (
-                status.textContent ===
-                "🎙️ Listening..."
-            ) {
+            listening = false;
 
-                status.textContent =
-                    "Ready. Tap Speak to ask again.";
-
-            }
+            resetMic();
 
         };
+
+
+    try {
+
+        recognition.start();
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
 
 }
 
 
+function stopVoice() {
 
-/* =====================================================
-   TEXT TO SPEECH
-===================================================== */
+    if (recognition) {
 
-function speak(
-    text,
-    language
-) {
+        try {
 
-    if (
-        !("speechSynthesis" in window)
-    ) {
+            recognition.stop();
 
-        return;
+        }
+
+        catch (error) {}
+
     }
 
 
-    window
-        .speechSynthesis
-        .cancel();
+    listening = false;
+
+    resetMic();
+
+}
+
+
+function resetMic() {
+
+    const button =
+        document.getElementById("micButton");
+
+
+    button.classList.remove(
+        "recording"
+    );
+
+
+    button.textContent =
+        "🎙";
+
+
+    document
+        .getElementById("voiceStatus")
+        .innerHTML =
+        '<span class="voice-dot"></span>Ready to help';
+
+}
+
+
+/* =====================================================
+   VOICE OUTPUT
+===================================================== */
+
+function speakAnswer(text) {
+
+    if (!("speechSynthesis" in window))
+        return;
+
+
+    const language =
+        document.getElementById(
+            "voiceLanguage"
+        ).value;
+
+
+    window.speechSynthesis.cancel();
 
 
     const speech =
-        new SpeechSynthesisUtterance(
-            text
-        );
+        new SpeechSynthesisUtterance(text);
 
 
     speech.lang =
         language;
 
-
     speech.rate =
         0.95;
 
+    speech.pitch =
+        1;
 
-    window
-        .speechSynthesis
-        .speak(
-            speech
+    speech.volume =
+        1;
+
+
+    speech.onstart =
+        function() {
+
+            document
+                .getElementById(
+                    "voiceStatus"
+                )
+                .innerHTML =
+                '<span class="speaking-dot"></span>' +
+                'AI is speaking...';
+
+        };
+
+
+    speech.onend =
+        function() {
+
+            document
+                .getElementById(
+                    "voiceStatus"
+                )
+                .innerHTML =
+                '<span class="voice-dot"></span>' +
+                'Ready to help';
+
+        };
+
+
+    window.speechSynthesis.speak(
+        speech
+    );
+
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+function scrollToAssistant() {
+
+    document
+        .getElementById("assistant")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* =====================================================
+   SECURITY
+===================================================== */
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(
+            /[&<>"']/g,
+            function(character) {
+
+                return {
+
+                    "&": "&amp;",
+                    "<": "&lt;",
+                    ">": "&gt;",
+                    '"': "&quot;",
+                    "'": "&#039;"
+
+                }[character];
+
+            }
         );
 
 }
@@ -1163,5 +1754,4 @@ function speak(
 </script>
 
 </body>
-
 </html>
