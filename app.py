@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, jsonify, session
-from openai import OpenAI
+from google import genai
+from google.genai import types
 import numpy as np
 import random
 import base64
@@ -14,7 +15,6 @@ import os
 
 app = Flask(__name__)
 
-# Secret used by Flask sessions
 app.secret_key = os.environ.get(
     "FLASK_SECRET_KEY",
     "smart-agriculture-development-key"
@@ -22,14 +22,16 @@ app.secret_key = os.environ.get(
 
 
 # =========================================================
-# OPENAI CLIENT
+# GEMINI CLIENT
 # =========================================================
 
-# The API key is NOT written in this file.
-# Render provides it through OPENAI_API_KEY.
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
-client = OpenAI(
-    api_key=os.environ.get("OPENAI_API_KEY")
+if not GEMINI_API_KEY:
+    print("WARNING: GEMINI_API_KEY is not configured.")
+
+client = genai.Client(
+    api_key=GEMINI_API_KEY
 )
 
 
@@ -155,12 +157,10 @@ def process_image(img_bytes):
 
         image_array = np.array(image)
 
-        # Basic plant-image check
         green_ratio = np.sum(
             (image_array[:, :, 1] > image_array[:, :, 0]) &
             (image_array[:, :, 1] > image_array[:, :, 2])
         ) / (224 * 224)
-
 
         if green_ratio < 0.05:
 
@@ -173,34 +173,18 @@ def process_image(img_bytes):
                 "remedy_process": ""
             }
 
-
-        # -------------------------------------------------
-        # CURRENT PROJECT DETECTION
-        #
-        # IMPORTANT:
-        # This keeps the detection behavior from your
-        # current project.
-        #
-        # Your model.joblib can be connected separately
-        # once its input/output format is confirmed.
-        # -------------------------------------------------
-
-        disease = random.choice(
-            diseases
-        )
-
+        # Current project detection behavior
+        disease = random.choice(diseases)
 
         confidence = random.randint(
             85,
             96
         )
 
-
         pesticide = pesticides.get(
             disease,
             "Follow local agricultural guidance."
         )
-
 
         remedy_name, remedy_process = home_remedies.get(
             disease,
@@ -210,31 +194,20 @@ def process_image(img_bytes):
             )
         )
 
-
-        # Simple moisture estimate
         soil_moisture = int(
             np.mean(
                 image_array[:, :, 2]
             ) / 255 * 100
         )
 
-
         return {
-
             "result": disease,
-
             "confidence": confidence,
-
             "soil_moisture": soil_moisture,
-
             "pesticide": pesticide,
-
             "remedy_name": remedy_name,
-
             "remedy_process": remedy_process
-
         }
-
 
     except Exception as error:
 
@@ -257,13 +230,11 @@ def camera_detect():
         "image"
     )
 
-
     if not file:
 
         return jsonify({
             "error": "No camera frame received."
         }), 400
-
 
     try:
 
@@ -273,15 +244,11 @@ def camera_detect():
             image_bytes
         )
 
-
-        # Save latest detection in session
         session["detection"] = result
-
 
         return jsonify(
             result
         )
-
 
     except Exception as error:
 
@@ -301,19 +268,12 @@ def camera_detect():
 def home():
 
     result = None
-
     confidence = 0
-
     pesticide = None
-
     soil_moisture = 0
-
     img_data = None
-
     remedy_name = None
-
     remedy_process = None
-
 
     if request.method == "POST":
 
@@ -321,72 +281,47 @@ def home():
             "image"
         )
 
-
         if file and file.filename:
 
             try:
 
                 image_bytes = file.read()
 
-
-                # Convert uploaded image to Base64
                 img_data = base64.b64encode(
                     image_bytes
                 ).decode("utf-8")
-
 
                 detection = process_image(
                     image_bytes
                 )
 
-
                 result = detection["result"]
-
                 confidence = detection["confidence"]
-
                 pesticide = detection["pesticide"]
-
                 soil_moisture = detection["soil_moisture"]
-
                 remedy_name = detection["remedy_name"]
-
                 remedy_process = detection["remedy_process"]
 
-
-                # Save latest detection
                 session["detection"] = detection
-
 
             except Exception as error:
 
-                result = (
-                    "Image processing error"
-                )
+                result = "Image processing error"
 
                 print(
                     "Image processing error:",
                     error
                 )
 
-
     return render_template(
-
         "index.html",
-
         result=result,
-
         confidence=confidence,
-
         pesticide=pesticide,
-
         soil_moisture=soil_moisture,
-
         img_data=img_data,
-
         remedy_name=remedy_name,
-
         remedy_process=remedy_process
-
     )
 
 
@@ -439,8 +374,7 @@ IMPORTANT BEHAVIOR:
 14. Reply in the language requested by the user.
 
 15. If the user asks a general question unrelated to agriculture,
-    you may still answer normally, but keep the assistant's
-    agricultural purpose in mind.
+    you may still answer normally.
 
 16. You are a conversational assistant, not merely a fixed
     question-and-answer system.
@@ -448,9 +382,8 @@ IMPORTANT BEHAVIOR:
 """
 
 
-
 # =========================================================
-# AI CHAT ENDPOINT
+# AI CHAT ENDPOINT — GEMINI
 # =========================================================
 
 @app.route(
@@ -465,13 +398,11 @@ def chat():
             silent=True
         )
 
-
         if not data:
 
             return jsonify({
                 "error": "No message received."
             }), 400
-
 
         user_message = str(
             data.get(
@@ -479,7 +410,6 @@ def chat():
                 ""
             )
         ).strip()
-
 
         if not user_message:
 
@@ -497,8 +427,6 @@ def chat():
             []
         )
 
-
-        # Keep the session reasonably small
         conversation = conversation[-12:]
 
 
@@ -510,9 +438,7 @@ def chat():
             "detection"
         )
 
-
         detection_context = ""
-
 
         if detection:
 
@@ -545,54 +471,89 @@ Do not claim that the detection is perfectly accurate.
 
 
         # -------------------------------------------------
-        # BUILD INPUT
+        # BUILD GEMINI CONVERSATION
         # -------------------------------------------------
 
-        input_messages = []
-
+        contents = []
 
         for message in conversation:
 
-            input_messages.append(
-                {
-                    "role": message["role"],
-                    "content": message["content"]
-                }
+            role = message.get("role")
+
+            content = message.get(
+                "content",
+                ""
             )
 
+            if role == "user":
 
-        input_messages.append(
+                contents.append(
+                    types.Content(
+                        role="user",
+                        parts=[
+                            types.Part.from_text(
+                                text=content
+                            )
+                        ]
+                    )
+                )
 
-            {
-                "role": "user",
+            elif role == "assistant":
 
-                "content":
-                    detection_context +
-                    "\n\nUSER QUESTION:\n" +
-                    user_message
-            }
+                contents.append(
+                    types.Content(
+                        role="model",
+                        parts=[
+                            types.Part.from_text(
+                                text=content
+                            )
+                        ]
+                    )
+                )
 
+
+        # Add current user question
+
+        current_prompt = (
+            detection_context +
+            "\n\nUSER QUESTION:\n" +
+            user_message
+        )
+
+        contents.append(
+            types.Content(
+                role="user",
+                parts=[
+                    types.Part.from_text(
+                        text=current_prompt
+                    )
+                ]
+            )
         )
 
 
         # -------------------------------------------------
-        # CALL OPENAI
+        # CALL GEMINI
         # -------------------------------------------------
 
-        response = client.responses.create(
+        response = client.models.generate_content(
 
-            model="gpt-5-mini",
+            model="gemini-2.5-flash",
 
-            instructions=AGRICULTURE_SYSTEM_PROMPT,
+            contents=contents,
 
-            input=input_messages
+            config=types.GenerateContentConfig(
 
+                system_instruction=AGRICULTURE_SYSTEM_PROMPT,
+
+                max_output_tokens=1000
+            )
         )
 
 
         assistant_message = (
-            response.output_text
-            if response.output_text
+            response.text
+            if response.text
             else "I couldn't generate a response."
         )
 
@@ -602,24 +563,18 @@ Do not claim that the detection is perfectly accurate.
         # -------------------------------------------------
 
         conversation.append(
-
             {
                 "role": "user",
                 "content": user_message
             }
-
         )
 
-
         conversation.append(
-
             {
                 "role": "assistant",
                 "content": assistant_message
             }
-
         )
-
 
         session["conversation"] = (
             conversation[-12:]
@@ -631,25 +586,22 @@ Do not claim that the detection is perfectly accurate.
         # -------------------------------------------------
 
         return jsonify({
-
             "answer": assistant_message
-
         })
 
 
     except Exception as error:
 
         print(
-            "OpenAI error:",
+            "Gemini error:",
             error
         )
-
 
         return jsonify({
 
             "error":
                 "The AI assistant could not respond. "
-                "Please check your OpenAI API configuration."
+                "Please check your Gemini API configuration."
 
         }), 500
 
@@ -668,7 +620,6 @@ def clear_chat():
         "conversation",
         None
     )
-
 
     return jsonify({
         "success": True
